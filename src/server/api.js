@@ -14,6 +14,10 @@ router.get('/messages', (req, res) => {
 });
 
 router.post('/messages', (req, res) => {
+  if (!req.body || !req.body.name || !req.body.email || !req.body.message)  {
+    return res.status(400).send('Message must be on the form {name, email, message}');
+  }
+
   const message = new Message(
       req.body.name,
       req.body.email,

@@ -34,4 +34,33 @@ describe('/messages', () => {
     //       .expect(400, done);
     // });
   });
+
+  describe('POST /messages', () => {
+    it('should return the new message object', done => {
+      const message = {
+        name: 'Martin',
+        email: 'martin@westerdals.no',
+        message: 'Hi, there!'
+      };
+
+      request(app)
+          .post('/messages')
+          .send(message)
+          .expect(201)
+          .expect(message, done);
+    });
+
+    it('should fail on missing fields', done => {
+      const message = {
+        name: undefined,
+        email: undefined,
+        message: undefined
+      };
+
+      request(app)
+          .post('/messages')
+          .send(message)
+          .expect(400, done);
+    });
+  });
 });
